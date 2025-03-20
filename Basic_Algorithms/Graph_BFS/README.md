@@ -213,3 +213,5 @@ BFS is a **powerful** algorithm used for shortest paths, connectivity checks, an
 - [BFS Question Comprehensive Guide](bfs_guide.md)
 - [BFS Problem Patterns](bfs_problem_patterns.md)
 - [BFS Coding Approaches](bfs_problem_solutions.md)
+- [BFS Problem List](bfs_problem_list.md)
+- [BFS Python Implementation](bfs_python.md)
