@@ -210,6 +210,6 @@ Adjacency Matrix:
 BFS is a **powerful** algorithm used for shortest paths, connectivity checks, and various search problems in graphs and grids. Mastering BFS and its variations (multi-source, bidirectional, etc.) is crucial for competitive programming and real-world applications.
 
 # **See Next**
-- [BFS Question Comprehensive Guide] (bfs_guide.md)
-- [BFS Problem Patterns] (bfs_problem_patterns.md)
-- [BFS Coding Approaches] (bfs_problem_solutions.md)
+- [BFS Question Comprehensive Guide](bfs_guide.md)
+- [BFS Problem Patterns](bfs_problem_patterns.md)
+- [BFS Coding Approaches](bfs_problem_solutions.md)
