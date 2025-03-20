@@ -149,6 +149,199 @@ def multi_source_bfs(grid, sources):
                 queue.append((new_x, new_y))
 ```
 
+# **BFS Implementation Patterns (C-style Adjacency Matrix & Arrays)**
+
+## **1. Standard BFS Using a Queue**
+This implementation uses a queue and an adjacency matrix for a graph.
+
+```cpp
+#include <iostream>
+#include <queue>
+#include <vector>
+using namespace std;
+
+#define MAX_NODES 100  // Maximum number of nodes
+
+int graph[MAX_NODES][MAX_NODES];  // Adjacency matrix
+bool visited[MAX_NODES];          // Visited array
+
+void bfs(int start, int n) {
+    queue<int> q;
+    q.push(start);
+    visited[start] = true;
+
+    while (!q.empty()) {
+        int node = q.front();
+        q.pop();
+        cout << node << " ";  // Process the node
+
+        for (int i = 0; i < n; i++) {
+            if (graph[node][i] == 1 && !visited[i]) {  // Check adjacency
+                visited[i] = true;
+                q.push(i);
+            }
+        }
+    }
+}
+
+int main() {
+    int n = 5;  // Example graph with 5 nodes
+    graph[0][1] = graph[1][0] = 1;
+    graph[1][2] = graph[2][1] = 1;
+    graph[2][3] = graph[3][2] = 1;
+    graph[3][4] = graph[4][3] = 1;
+    
+    cout << "BFS Traversal: ";
+    bfs(0, n);  // Start BFS from node 0
+    return 0;
+}
+```
+
+---
+
+## **2. BFS for 2D Grids (dx, dy Method)**
+This uses `dx, dy` arrays to navigate in 4 directions.
+
+```cpp
+#include <iostream>
+#include <queue>
+using namespace std;
+
+#define ROWS 5
+#define COLS 5
+
+int grid[ROWS][COLS] = { // Example grid
+    {1, 1, 0, 0, 1},
+    {0, 1, 1, 0, 1},
+    {1, 0, 1, 1, 0},
+    {0, 1, 0, 1, 1},
+    {1, 1, 1, 0, 1}
+};
+
+bool visited[ROWS][COLS];  // Visited array
+
+// Directions: right, down, left, up
+int dx[] = {0, 1, 0, -1};
+int dy[] = {1, 0, -1, 0};
+
+void bfs_grid(int start_x, int start_y) {
+    queue<pair<int, int>> q;
+    q.push({start_x, start_y});
+    visited[start_x][start_y] = true;
+
+    while (!q.empty()) {
+        auto [x, y] = q.front();
+        q.pop();
+        cout << "(" << x << "," << y << ") ";
+
+        for (int i = 0; i < 4; i++) { // 4 possible directions
+            int new_x = x + dx[i];
+            int new_y = y + dy[i];
+
+            if (new_x >= 0 && new_x < ROWS && new_y >= 0 && new_y < COLS &&
+                !visited[new_x][new_y] && grid[new_x][new_y] == 1) {
+                visited[new_x][new_y] = true;
+                q.push({new_x, new_y});
+            }
+        }
+    }
+}
+
+int main() {
+    cout << "BFS Grid Traversal: ";
+    bfs_grid(0, 0); // Start BFS from (0,0)
+    return 0;
+}
+```
+
+---
+
+## **3. Multi-Source BFS**
+This version starts from multiple points at the same time.
+
+```cpp
+#include <iostream>
+#include <queue>
+using namespace std;
+
+#define ROWS 5
+#define COLS 5
+
+int grid[ROWS][COLS] = { 
+    {1, 1, 0, 0, 1},
+    {0, 1, 1, 0, 1},
+    {1, 0, 1, 1, 0},
+    {0, 1, 0, 1, 1},
+    {1, 1, 1, 0, 1}
+};
+
+bool visited[ROWS][COLS];
+
+// Directions: right, down, left, up
+int dx[] = {0, 1, 0, -1};
+int dy[] = {1, 0, -1, 0};
+
+void multi_source_bfs(queue<pair<int, int>> sources) {
+    while (!sources.empty()) {
+        auto [x, y] = sources.front();
+        sources.pop();
+        cout << "(" << x << "," << y << ") ";
+
+        for (int i = 0; i < 4; i++) {
+            int new_x = x + dx[i];
+            int new_y = y + dy[i];
+
+            if (new_x >= 0 && new_x < ROWS && new_y >= 0 && new_y < COLS &&
+                !visited[new_x][new_y] && grid[new_x][new_y] == 1) {
+                visited[new_x][new_y] = true;
+                sources.push({new_x, new_y});
+            }
+        }
+    }
+}
+
+int main() {
+    queue<pair<int, int>> sources;
+    sources.push({0, 0});
+    sources.push({2, 2});
+    visited[0][0] = visited[2][2] = true;
+
+    cout << "Multi-Source BFS Traversal: ";
+    multi_source_bfs(sources);
+    return 0;
+}
+```
+
+---
+
+## **Key BFS Concepts:**
+- ✅ Uses a queue (FIFO)
+- ✅ Explores all neighbors before going deeper
+- ✅ Finds shortest paths in unweighted graphs
+- ✅ Used in grid traversal (dx, dy method)
+- ✅ Handles multi-source problems efficiently
+
+---
+
+## **Where is BFS Used?**
+- **Pathfinding Algorithms**: Shortest path in unweighted graphs (Dijkstra’s for weighted).
+- **Grid-based Games**: Movement in chess (Knight’s shortest path).
+- **AI & Robotics**: Path planning for robots.
+- **Computer Networks**: Broadcasting in networks.
+- **Image Processing**: Flood fill (used in Paint).
+- **Social Networks**: Finding shortest connections.
+- **Maze Solving**: Shortest escape path.
+
+---
+
+## **Benefits of BFS**
+✅ **Guaranteed shortest path in unweighted graphs**  
+✅ **Efficient for connected components counting**  
+✅ **Simple implementation using queue**  
+✅ **Works well for multi-source problems**  
+
+---
+
 ## Conclusion
 
 BFS is a versatile algorithm used in a variety of competitive programming problems. Understanding its different implementations and applications will help solve many graph-related challenges efficiently.
